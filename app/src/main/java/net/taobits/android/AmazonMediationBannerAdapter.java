@@ -22,7 +22,7 @@ import com.google.android.gms.ads.mediation.MediationBannerListener;
 // Inspired by https://github.com/sheng168/AndroidAds
 // and the discussion https://groups.google.com/forum/#!topic/google-admob-ads-sdk/1-VB7GR0Z8g
 // and the FacebookAdapter from Google
-public class AmazonAdBanner implements MediationBannerAdapter {
+public class AmazonMediationBannerAdapter implements MediationBannerAdapter {
 
     @Override
     public void onDestroy() {
@@ -100,30 +100,30 @@ public class AmazonAdBanner implements MediationBannerAdapter {
     private class AmazonBannerListener implements AdListener {
         @Override
         public void onAdLoaded(Ad ad, AdProperties adProperties) {
-            mediationBannerListener.onAdLoaded(AmazonAdBanner.this);
+            mediationBannerListener.onAdLoaded(AmazonMediationBannerAdapter.this);
         }
 
         @Override
         public void onAdFailedToLoad(Ad ad, AdError adError) {
-            Log.e(AmazonAdBanner.this.getClass().getSimpleName(), adError.getMessage());
-            mediationBannerListener.onAdFailedToLoad(AmazonAdBanner.this, adError.getCode().ordinal());
+            Log.e(AmazonMediationBannerAdapter.this.getClass().getSimpleName(), adError.getMessage());
+            mediationBannerListener.onAdFailedToLoad(AmazonMediationBannerAdapter.this, adError.getCode().ordinal());
         }
 
         @Override
         public void onAdExpanded(Ad ad) {
-            mediationBannerListener.onAdClicked(AmazonAdBanner.this);
-            mediationBannerListener.onAdOpened(AmazonAdBanner.this);
-            mediationBannerListener.onAdLeftApplication(AmazonAdBanner.this);
+            mediationBannerListener.onAdClicked(AmazonMediationBannerAdapter.this);
+            mediationBannerListener.onAdOpened(AmazonMediationBannerAdapter.this);
+            mediationBannerListener.onAdLeftApplication(AmazonMediationBannerAdapter.this);
         }
 
         @Override
         public void onAdCollapsed(Ad ad) {
-            mediationBannerListener.onAdClosed(AmazonAdBanner.this);
+            mediationBannerListener.onAdClosed(AmazonMediationBannerAdapter.this);
         }
 
         @Override
         public void onAdDismissed(Ad ad) {
-            mediationBannerListener.onAdClosed(AmazonAdBanner.this);
+            mediationBannerListener.onAdClosed(AmazonMediationBannerAdapter.this);
         }
     }
 }

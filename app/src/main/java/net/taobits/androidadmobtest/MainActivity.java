@@ -4,11 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-
 import net.taobits.android.AdDisplay;
 
 public class MainActivity extends Activity {
