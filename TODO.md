@@ -1,0 +1,2 @@
+- Decrease MinSdk Version
+- Minify
