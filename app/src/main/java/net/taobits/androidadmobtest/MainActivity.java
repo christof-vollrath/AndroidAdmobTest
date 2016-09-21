@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
-import net.taobits.android.AdDisplay;
+import net.taobits.android.ads.AdDisplay;
 
 public class MainActivity extends Activity {
 

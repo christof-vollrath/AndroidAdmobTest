@@ -1,4 +1,4 @@
-package net.taobits.android;
+package net.taobits.android.ads;
 
 import com.amazon.device.ads.AdLayout;
 import com.amazon.device.ads.AdRegistration;
@@ -39,7 +39,7 @@ public class AdDisplay {
 		admobAdView.setAdSize(adSize);
 		adLayout.addView(admobAdView);
     	Builder adRequestBuilder = new Builder();
-    	adRequestBuilder.addTestDevice("BE54FEB098573CE6CDB2E0190D77096B");
+    	//adRequestBuilder.addTestDevice("BE54FEB098573CE6CDB2E0190D77096B");
     	AdRequest adRequest = adRequestBuilder.build();
     	admobAdView.loadAd(adRequest);
     }
@@ -131,7 +131,10 @@ public class AdDisplay {
 	private int adWidth;
 	private LinearLayout adLayout;
 
-	public final static String ADMOB_ADUNIT_ID = "Your admob ad unit";
-	public final static String FACEBOOK_PLACEMENT_ID = "Your facebook placement id";
-	public static final String AMAZON_APP_KEY = "Your amazon app key"; // Application Key
+//	public final static String ADMOB_ADUNIT_ID = "Your admob ad unit";
+//	public final static String FACEBOOK_PLACEMENT_ID = "Your facebook placement id";
+//	public static final String AMAZON_APP_KEY = "Your amazon app key"; // Application Key
+    public final static String ADMOB_ADUNIT_ID = "ca-app-pub-8195484043291241/5976474214";
+    public final static String FACEBOOK_PLACEMENT_ID = "575329099236386_595075407261755";
+    public static final String AMAZON_APP_KEY = "41325255515048484f56374355323357"; // Application Key
 }
