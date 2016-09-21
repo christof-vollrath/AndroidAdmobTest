@@ -20,6 +20,7 @@ import com.google.android.gms.ads.mediation.customevent.CustomEventBannerListene
 
 // Inspired by https://github.com/sheng168/AndroidAds
 // and the discussion https://groups.google.com/forum/#!topic/google-admob-ads-sdk/1-VB7GR0Z8g
+// and a bit by the com.google.ads.mediation.facebook.FacebookAdapter
 public class AmazonCustomEventBanner implements CustomEventBanner {
 
 	@Override
@@ -41,15 +42,10 @@ public class AmazonCustomEventBanner implements CustomEventBanner {
 	public void requestBannerAd(Context context, CustomEventBannerListener customEventBannerListener, String serverParameter, AdSize adSize,
 								MediationAdRequest mediationAdRequest, Bundle bundle) {
 		this.customEventBannerListener = customEventBannerListener;
-		try {
-			AdRegistration.setAppKey(AdDisplay.AMAZON_APP_KEY);
-		} catch (Exception e) {
-			Log.e("AdDisplay", "AdRegistration.setAppKey throws: " + e);
-			customEventBannerListener.onAdFailedToLoad(1);
-			return;
-		}
-		AdRegistration.enableTesting(true);
-		AdRegistration.enableLogging(true);
+        if (AdConfig.AMAZON_TEST_ENABLED) {
+            AdRegistration.enableLogging(true); // For debugging purposes enable logging, but disable for production builds.
+            AdRegistration.enableTesting(true);// For debugging purposes flag all ad requests as tests, but set to false for production builds.
+        }
 
 		amazonAdView = getAmazonAdView(context, adSize);
 		if (amazonAdView == null)  {

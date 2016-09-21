@@ -21,48 +21,77 @@ public class AdDisplay {
 		adLayout = linearLayout;
 
         initAdmobAds();
+        initAmazonAds();
 
-	    addAdMobAd(adHeight, adWidth);
-//		addFacebookAd(adHeight, adWidth); // Facebook AudienceNetwork will be shown through mediation, uncomment only for testing directly
-//		addAmazonMobileAd(adHeight, adWidth); // Amazon Ads will be shown through mediation, uncomment only for testing
+        switch(AdConfig.MEDIATION_TYPE) {
+            case ADMOB_WITH_MEDIATION:
+                addAdMobAd(adHeight, adWidth);
+                break;
+            case FACEBOOK_AUDIENCE_NETWORK_ONLY:
+        		addFacebookAd(adHeight, adWidth);
+                break;
+            case AMAZON_MOBILE_ADS_ONLY:
+        		addAmazonMobileAd(adHeight, adWidth);
+                break;
+        }
 	}
 
     private void initAdmobAds() {
-        MobileAds.initialize(activity.getApplicationContext(), ADMOB_ADUNIT_ID);
+        try {
+            MobileAds.initialize(activity.getApplicationContext(), AdConfig.ADMOB_ADUNIT_ID);
+        } catch (Exception e) {
+            Log.e("AdDisplay", "Admob MobileAds.initialize throws: " + e);
+        }
+    }
+
+    private void initAmazonAds() {
+        try {
+            AdRegistration.setAppKey(AdConfig.AMAZON_APP_KEY);
+        } catch (Exception e) {
+            Log.e("AdDisplay", "Amazon AdRegistration.setAppKey throws: " + e);
+        }
     }
 
     private void addAdMobAd(int adHeight, int adWidth){
 		if (adLayout == null) return;
 		AdSize adSize = getAdmobAdSize(adHeight, adWidth);
 		admobAdView = new AdView(activity);
-		admobAdView.setAdUnitId(ADMOB_ADUNIT_ID);
+		admobAdView.setAdUnitId(AdConfig.ADMOB_ADUNIT_ID);
 		admobAdView.setAdSize(adSize);
 		adLayout.addView(admobAdView);
     	Builder adRequestBuilder = new Builder();
-    	//adRequestBuilder.addTestDevice("BE54FEB098573CE6CDB2E0190D77096B");
+        if (AdConfig.ADMOB_TEST_ENABLED) {
+            for (String device: AdConfig.ADMOB_TEST_DEVICES) {
+                adRequestBuilder.addTestDevice(device);
+            }
+        }
     	AdRequest adRequest = adRequestBuilder.build();
     	admobAdView.loadAd(adRequest);
     }
     
-    private void addFacebookAd(int adHeight, int adWidth){
+    private void addFacebookAd(int adHeight, int adWidth) {
 		if (adLayout == null) return;
-    	com.facebook.ads.AdSettings.addTestDevice("35242d4eac2f49176a40a06e0efb9824");
+        if (AdConfig.FACEBOOK_TEST_ENABLED) {
+            for (String device: AdConfig.FACEBOOK_TEST_DEVICES) {
+                com.facebook.ads.AdSettings.addTestDevice(device);
+            }
+        }
     	com.facebook.ads.AdSize adSize = getFacebookAdSize(adHeight, adWidth);
-    	facebookAdView = new com.facebook.ads.AdView(activity, FACEBOOK_PLACEMENT_ID, adSize);
+    	facebookAdView = new com.facebook.ads.AdView(activity, AdConfig.FACEBOOK_PLACEMENT_ID, adSize);
 		adLayout.addView(facebookAdView);
     	facebookAdView.loadAd();
     }
 
     private void addAmazonMobileAd(int adHeight, int adWidth){
 		if (adLayout == null) return;
-        // For debugging purposes enable logging, but disable for production builds.
-        AdRegistration.enableLogging(true);
-        // For debugging purposes flag all ad requests as tests, but set to false for production builds.
-        AdRegistration.enableTesting(true);
+        if (AdConfig.AMAZON_TEST_ENABLED) {
+            AdRegistration.enableLogging(true); // For debugging purposes enable logging, but disable for production builds.
+            AdRegistration.enableTesting(true);// For debugging purposes flag all ad requests as tests, but set to false for production builds.
+        }
 
     	com.amazon.device.ads.AdSize adSize = getAmazonAdSize(adHeight, adWidth);
         try {
-            AdRegistration.setAppKey(AMAZON_APP_KEY);
+            AdRegistration.setAppKey(AdConfig.AMAZON_APP_KEY);
         } catch (Exception e) {
             Log.e("AdDisplay", "AdRegistration.setAppKey throws: " + e);
             return;
@@ -131,10 +160,4 @@ public class AdDisplay {
 	private int adWidth;
 	private LinearLayout adLayout;
 
-//	public final static String ADMOB_ADUNIT_ID = "Your admob ad unit";
-//	public final static String FACEBOOK_PLACEMENT_ID = "Your facebook placement id";
-//	public static final String AMAZON_APP_KEY = "Your amazon app key"; // Application Key
-    public final static String ADMOB_ADUNIT_ID = "ca-app-pub-8195484043291241/5976474214";
-    public final static String FACEBOOK_PLACEMENT_ID = "575329099236386_595075407261755";
-    public static final String AMAZON_APP_KEY = "41325255515048484f56374355323357"; // Application Key
 }
