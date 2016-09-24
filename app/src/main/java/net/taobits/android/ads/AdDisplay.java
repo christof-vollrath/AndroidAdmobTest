@@ -70,16 +70,16 @@ public class AdDisplay {
     }
     
     private void addFacebookAd(int adHeight, int adWidth) {
-		if (adLayout == null) return;
-        if (AdConfig.FACEBOOK_TEST_ENABLED) {
-            for (String device: AdConfig.FACEBOOK_TEST_DEVICES) {
-                com.facebook.ads.AdSettings.addTestDevice(device);
-            }
-        }
-    	com.facebook.ads.AdSize adSize = getFacebookAdSize(adHeight, adWidth);
-    	facebookAdView = new com.facebook.ads.AdView(activity, AdConfig.FACEBOOK_PLACEMENT_ID, adSize);
-		adLayout.addView(facebookAdView);
-    	facebookAdView.loadAd();
+//		if (adLayout == null) return; No facebook because no money
+//        if (AdConfig.FACEBOOK_TEST_ENABLED) {
+//            for (String device: AdConfig.FACEBOOK_TEST_DEVICES) {
+//                com.facebook.ads.AdSettings.addTestDevice(device);
+//            }
+//        }
+//    	com.facebook.ads.AdSize adSize = getFacebookAdSize(adHeight, adWidth);
+//    	facebookAdView = new com.facebook.ads.AdView(activity, AdConfig.FACEBOOK_PLACEMENT_ID, adSize);
+//		adLayout.addView(facebookAdView);
+//    	facebookAdView.loadAd();
     }
 
     private void addAmazonMobileAd(int adHeight, int adWidth){
@@ -117,12 +117,12 @@ public class AdDisplay {
      *     Height 50 Phone banner	BANNER_HEIGHT_50
      *     Height 50 Tablet banner	BANNER_HEIGHT_90
      */
-    private com.facebook.ads.AdSize getFacebookAdSize(int adHeight, int adWidth) {
-    	com.facebook.ads.AdSize result = com.facebook.ads.AdSize.BANNER_HEIGHT_50;
-    	if (adWidth >= 728 && adHeight >= 90) result = com.facebook.ads.AdSize.BANNER_HEIGHT_90;
-    	else if (adWidth >= 468 && adHeight >= 60) result = com.facebook.ads.AdSize.BANNER_HEIGHT_50; // No full banner for facebook
-    	return result;
-    }
+//    private com.facebook.ads.AdSize getFacebookAdSize(int adHeight, int adWidth) { No facebook because no money
+//    	com.facebook.ads.AdSize result = com.facebook.ads.AdSize.BANNER_HEIGHT_50;
+//    	if (adWidth >= 728 && adHeight >= 90) result = com.facebook.ads.AdSize.BANNER_HEIGHT_90;
+//    	else if (adWidth >= 468 && adHeight >= 60) result = com.facebook.ads.AdSize.BANNER_HEIGHT_50; // No full banner for facebook
+//    	return result;
+//    }
 
     /**
      * Amazon Ad sizes
@@ -137,7 +137,7 @@ public class AdDisplay {
 	public void destroy() {
 		//adView.removeAllViews(); // When it is not removed, the error "WebView.destroy() called while still attached!" will be logged by AdMob
 		if (admobAdView != null) { admobAdView.destroy(); admobAdView = null; }
-		if (facebookAdView != null) { facebookAdView.destroy(); facebookAdView = null; }
+//		if (facebookAdView != null) { facebookAdView.destroy(); facebookAdView = null; } No facebook because no money
 		if (amazonAdView != null) { amazonAdView.destroy(); amazonAdView = null; }
 			
 	}
@@ -152,7 +152,7 @@ public class AdDisplay {
 	
 	private Activity activity;
 	private AdView admobAdView;
-	private com.facebook.ads.AdView facebookAdView;
+//	private com.facebook.ads.AdView facebookAdView; No facebook because no money
 	private com.amazon.device.ads.AdLayout amazonAdView;
 	
 	
